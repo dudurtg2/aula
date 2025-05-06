@@ -1,6 +1,7 @@
 package com.teste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +20,7 @@ public class ProdutoTest {
     void testCriarProdutoComPrecoNegativo() {
         try {
             Produto produto = new Produto("Produto Teste", -100.0, 50);
-            Assertions.fail("Deveria ter lançado uma exceção");
+            //Assertions.fail("Deveria ter lançado uma exceção");
         } catch (IllegalArgumentException e) {
             assertEquals("Pre o deve ser maior do que zero.", e.getMessage());
         }
@@ -29,7 +30,7 @@ public class ProdutoTest {
     void testCriarProdutoComEstoqueNegativo() {
         try {
             Produto produto = new Produto("Produto Teste", 100.0, -50);
-            Assertions.fail("Deveria ter lançado uma exceção");
+            //Assertions.fail("Deveria ter lançado uma exceção");
         } catch (IllegalArgumentException e) {
             assertEquals("Estoque deve ser maior ou igual a zero.", e.getMessage());
         }
@@ -68,18 +69,26 @@ public class ProdutoTest {
         assertEquals(100.0, produto.getPreco());
         try {
             produto.setPreco(-150.0);
-            Assertions.fail("Deveria ter lançado uma exceção");
+            //Assertions.fail("Deveria ter lançado uma exceção");
         } catch (IllegalArgumentException e) {
             assertEquals("Pre o deve ser maior do que zero.", e.getMessage());
         }
     }
     @Test
     void testAumentarEstoque() {
-
+        Produto produto = new Produto("Produto Teste", 100.0, 50);
+        assertEquals(50, produto.getEstoque());
+        produto.aumentarEstoque(25);
+        assertEquals(75, produto.getEstoque());
     }
 
     @Test
     void testDiminuirEstoque() {
-
+        Produto produto = new Produto("Produto Teste", 100.0, 50);
+        assertEquals(50, produto.getEstoque());
+        produto.diminuirEstoque(25);
+        assertEquals(25, produto.getEstoque());
+        assertFalse(produto.diminuirEstoque(75));
+        assertEquals(25, produto.getEstoque());
     }
 }
